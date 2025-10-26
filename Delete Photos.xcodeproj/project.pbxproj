@@ -6,43 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		8F52F64D2EADB3A500E44284 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F52F6372EADB3A300E44284 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8F52F63E2EADB3A300E44284;
-			remoteInfo = "Delete Photos";
-		};
-		8F52F6572EADB3A500E44284 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F52F6372EADB3A300E44284 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8F52F63E2EADB3A300E44284;
-			remoteInfo = "Delete Photos";
-		};
-/* End PBXContainerItemProxy section */
+/* Begin PBXBuildFile section */
+		8F52F66C2EADD61C00E44284 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 8F52F66B2EADD61C00E44284 /* icon.icon */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8F52F63F2EADB3A300E44284 /* Delete Photos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delete Photos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F52F64C2EADB3A500E44284 /* Delete PhotosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Delete PhotosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F52F6562EADB3A500E44284 /* Delete PhotosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Delete PhotosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F52F66B2EADD61C00E44284 /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8F52F6412EADB3A300E44284 /* Delete Photos */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Delete Photos";
-			sourceTree = "<group>";
-		};
-		8F52F64F2EADB3A500E44284 /* Delete PhotosTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Delete PhotosTests";
-			sourceTree = "<group>";
-		};
-		8F52F6592EADB3A500E44284 /* Delete PhotosUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Delete PhotosUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -55,29 +31,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F52F6492EADB3A500E44284 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F52F6532EADB3A500E44284 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		8F52F6362EADB3A300E44284 = {
 			isa = PBXGroup;
 			children = (
+				8F52F66B2EADD61C00E44284 /* icon.icon */,
 				8F52F6412EADB3A300E44284 /* Delete Photos */,
-				8F52F64F2EADB3A500E44284 /* Delete PhotosTests */,
-				8F52F6592EADB3A500E44284 /* Delete PhotosUITests */,
 				8F52F6402EADB3A300E44284 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,8 +47,6 @@
 			isa = PBXGroup;
 			children = (
 				8F52F63F2EADB3A300E44284 /* Delete Photos.app */,
-				8F52F64C2EADB3A500E44284 /* Delete PhotosTests.xctest */,
-				8F52F6562EADB3A500E44284 /* Delete PhotosUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,52 +76,6 @@
 			productReference = 8F52F63F2EADB3A300E44284 /* Delete Photos.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8F52F64B2EADB3A500E44284 /* Delete PhotosTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8F52F6632EADB3A500E44284 /* Build configuration list for PBXNativeTarget "Delete PhotosTests" */;
-			buildPhases = (
-				8F52F6482EADB3A500E44284 /* Sources */,
-				8F52F6492EADB3A500E44284 /* Frameworks */,
-				8F52F64A2EADB3A500E44284 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8F52F64E2EADB3A500E44284 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8F52F64F2EADB3A500E44284 /* Delete PhotosTests */,
-			);
-			name = "Delete PhotosTests";
-			packageProductDependencies = (
-			);
-			productName = "Delete PhotosTests";
-			productReference = 8F52F64C2EADB3A500E44284 /* Delete PhotosTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		8F52F6552EADB3A500E44284 /* Delete PhotosUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8F52F6662EADB3A500E44284 /* Build configuration list for PBXNativeTarget "Delete PhotosUITests" */;
-			buildPhases = (
-				8F52F6522EADB3A500E44284 /* Sources */,
-				8F52F6532EADB3A500E44284 /* Frameworks */,
-				8F52F6542EADB3A500E44284 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8F52F6582EADB3A500E44284 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8F52F6592EADB3A500E44284 /* Delete PhotosUITests */,
-			);
-			name = "Delete PhotosUITests";
-			packageProductDependencies = (
-			);
-			productName = "Delete PhotosUITests";
-			productReference = 8F52F6562EADB3A500E44284 /* Delete PhotosUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -175,14 +88,6 @@
 				TargetAttributes = {
 					8F52F63E2EADB3A300E44284 = {
 						CreatedOnToolsVersion = 26.0.1;
-					};
-					8F52F64B2EADB3A500E44284 = {
-						CreatedOnToolsVersion = 26.0.1;
-						TestTargetID = 8F52F63E2EADB3A300E44284;
-					};
-					8F52F6552EADB3A500E44284 = {
-						CreatedOnToolsVersion = 26.0.1;
-						TestTargetID = 8F52F63E2EADB3A300E44284;
 					};
 				};
 			};
@@ -201,8 +106,6 @@
 			projectRoot = "";
 			targets = (
 				8F52F63E2EADB3A300E44284 /* Delete Photos */,
-				8F52F64B2EADB3A500E44284 /* Delete PhotosTests */,
-				8F52F6552EADB3A500E44284 /* Delete PhotosUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -212,20 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F52F64A2EADB3A500E44284 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F52F6542EADB3A500E44284 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				8F52F66C2EADD61C00E44284 /* icon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,34 +129,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F52F6482EADB3A500E44284 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F52F6522EADB3A500E44284 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8F52F64E2EADB3A500E44284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8F52F63E2EADB3A300E44284 /* Delete Photos */;
-			targetProxy = 8F52F64D2EADB3A500E44284 /* PBXContainerItemProxy */;
-		};
-		8F52F6582EADB3A500E44284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8F52F63E2EADB3A300E44284 /* Delete Photos */;
-			targetProxy = 8F52F6572EADB3A500E44284 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8F52F65E2EADB3A500E44284 /* Debug */ = {
@@ -393,16 +256,21 @@
 		8F52F6612EADB3A500E44284 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H9X2W7T5H7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Swip Delete";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app needs permission to modify or delete selected photos.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photos to view and manage them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -425,16 +293,21 @@
 		8F52F6622EADB3A500E44284 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = icon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H9X2W7T5H7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Swip Delete";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app needs permission to modify or delete selected photos.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photos to view and manage them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -451,90 +324,6 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		8F52F6642EADB3A500E44284 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H9X2W7T5H7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-PhotosTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Delete Photos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Delete Photos";
-			};
-			name = Debug;
-		};
-		8F52F6652EADB3A500E44284 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H9X2W7T5H7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-PhotosTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Delete Photos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Delete Photos";
-			};
-			name = Release;
-		};
-		8F52F6672EADB3A500E44284 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H9X2W7T5H7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-PhotosUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Delete Photos";
-			};
-			name = Debug;
-		};
-		8F52F6682EADB3A500E44284 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = H9X2W7T5H7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-PhotosUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Delete Photos";
 			};
 			name = Release;
 		};
@@ -555,24 +344,6 @@
 			buildConfigurations = (
 				8F52F6612EADB3A500E44284 /* Debug */,
 				8F52F6622EADB3A500E44284 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8F52F6632EADB3A500E44284 /* Build configuration list for PBXNativeTarget "Delete PhotosTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8F52F6642EADB3A500E44284 /* Debug */,
-				8F52F6652EADB3A500E44284 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8F52F6662EADB3A500E44284 /* Build configuration list for PBXNativeTarget "Delete PhotosUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8F52F6672EADB3A500E44284 /* Debug */,
-				8F52F6682EADB3A500E44284 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
