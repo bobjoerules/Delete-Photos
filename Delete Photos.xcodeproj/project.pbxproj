@@ -8,17 +8,48 @@
 
 /* Begin PBXBuildFile section */
 		8F52F66C2EADD61C00E44284 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 8F52F66B2EADD61C00E44284 /* icon.icon */; };
+		8FA38CB12EAEDF520072A91D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8FA38CAF2EAEDF490072A91D /* README.md */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F52F6C92EAEBA6500E44284 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F52F6372EADB3A300E44284 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F52F63E2EADB3A300E44284;
+			remoteInfo = "Delete Photos";
+		};
+		8F52F6D62EAEBA8000E44284 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F52F6372EADB3A300E44284 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F52F63E2EADB3A300E44284;
+			remoteInfo = "Delete Photos";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8F52F63F2EADB3A300E44284 /* Delete Photos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delete Photos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F52F66B2EADD61C00E44284 /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
+		8F52F6C32EAEBA6500E44284 /* Delete Photos UI Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Delete Photos UI Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F52F6D22EAEBA8000E44284 /* Delete Photos Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Delete Photos Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FA38CAF2EAEDF490072A91D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8F52F6412EADB3A300E44284 /* Delete Photos */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Delete Photos";
+			sourceTree = "<group>";
+		};
+		8F52F6C42EAEBA6500E44284 /* Delete Photos UI Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Delete Photos UI Tests";
+			sourceTree = "<group>";
+		};
+		8F52F6D32EAEBA8000E44284 /* Delete Photos Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Delete Photos Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -31,14 +62,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8F52F6C02EAEBA6500E44284 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F52F6CF2EAEBA8000E44284 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		8F52F6362EADB3A300E44284 = {
 			isa = PBXGroup;
 			children = (
+				8FA38CAF2EAEDF490072A91D /* README.md */,
 				8F52F66B2EADD61C00E44284 /* icon.icon */,
 				8F52F6412EADB3A300E44284 /* Delete Photos */,
+				8F52F6C42EAEBA6500E44284 /* Delete Photos UI Tests */,
+				8F52F6D32EAEBA8000E44284 /* Delete Photos Tests */,
 				8F52F6402EADB3A300E44284 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				8F52F63F2EADB3A300E44284 /* Delete Photos.app */,
+				8F52F6C32EAEBA6500E44284 /* Delete Photos UI Tests.xctest */,
+				8F52F6D22EAEBA8000E44284 /* Delete Photos Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +126,52 @@
 			productReference = 8F52F63F2EADB3A300E44284 /* Delete Photos.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8F52F6C22EAEBA6500E44284 /* Delete Photos UI Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F52F6CB2EAEBA6500E44284 /* Build configuration list for PBXNativeTarget "Delete Photos UI Tests" */;
+			buildPhases = (
+				8F52F6BF2EAEBA6500E44284 /* Sources */,
+				8F52F6C02EAEBA6500E44284 /* Frameworks */,
+				8F52F6C12EAEBA6500E44284 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F52F6CA2EAEBA6500E44284 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8F52F6C42EAEBA6500E44284 /* Delete Photos UI Tests */,
+			);
+			name = "Delete Photos UI Tests";
+			packageProductDependencies = (
+			);
+			productName = "Delete Photos UI Tests";
+			productReference = 8F52F6C32EAEBA6500E44284 /* Delete Photos UI Tests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		8F52F6D12EAEBA8000E44284 /* Delete Photos Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F52F6D82EAEBA8000E44284 /* Build configuration list for PBXNativeTarget "Delete Photos Tests" */;
+			buildPhases = (
+				8F52F6CE2EAEBA8000E44284 /* Sources */,
+				8F52F6CF2EAEBA8000E44284 /* Frameworks */,
+				8F52F6D02EAEBA8000E44284 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F52F6D72EAEBA8000E44284 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8F52F6D32EAEBA8000E44284 /* Delete Photos Tests */,
+			);
+			name = "Delete Photos Tests";
+			packageProductDependencies = (
+			);
+			productName = "Delete Photos Tests";
+			productReference = 8F52F6D22EAEBA8000E44284 /* Delete Photos Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -88,6 +184,14 @@
 				TargetAttributes = {
 					8F52F63E2EADB3A300E44284 = {
 						CreatedOnToolsVersion = 26.0.1;
+					};
+					8F52F6C22EAEBA6500E44284 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 8F52F63E2EADB3A300E44284;
+					};
+					8F52F6D12EAEBA8000E44284 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = 8F52F63E2EADB3A300E44284;
 					};
 				};
 			};
@@ -106,6 +210,8 @@
 			projectRoot = "";
 			targets = (
 				8F52F63E2EADB3A300E44284 /* Delete Photos */,
+				8F52F6C22EAEBA6500E44284 /* Delete Photos UI Tests */,
+				8F52F6D12EAEBA8000E44284 /* Delete Photos Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -115,7 +221,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FA38CB12EAEDF520072A91D /* README.md in Resources */,
 				8F52F66C2EADD61C00E44284 /* icon.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F52F6C12EAEBA6500E44284 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F52F6D02EAEBA8000E44284 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +250,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8F52F6BF2EAEBA6500E44284 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F52F6CE2EAEBA8000E44284 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F52F6CA2EAEBA6500E44284 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F52F63E2EADB3A300E44284 /* Delete Photos */;
+			targetProxy = 8F52F6C92EAEBA6500E44284 /* PBXContainerItemProxy */;
+		};
+		8F52F6D72EAEBA8000E44284 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F52F63E2EADB3A300E44284 /* Delete Photos */;
+			targetProxy = 8F52F6D62EAEBA8000E44284 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8F52F65E2EADB3A500E44284 /* Debug */ = {
@@ -327,6 +475,88 @@
 			};
 			name = Release;
 		};
+		8F52F6CC2EAEBA6500E44284 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9X2W7T5H7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-Photos-UI-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Delete Photos";
+			};
+			name = Debug;
+		};
+		8F52F6CD2EAEBA6500E44284 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9X2W7T5H7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-Photos-UI-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Delete Photos";
+			};
+			name = Release;
+		};
+		8F52F6D92EAEBA8000E44284 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9X2W7T5H7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-Photos-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Delete Photos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Delete Photos";
+			};
+			name = Debug;
+		};
+		8F52F6DA2EAEBA8000E44284 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9X2W7T5H7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "bobjoerules.Delete-Photos-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Delete Photos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Delete Photos";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -344,6 +574,24 @@
 			buildConfigurations = (
 				8F52F6612EADB3A500E44284 /* Debug */,
 				8F52F6622EADB3A500E44284 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F52F6CB2EAEBA6500E44284 /* Build configuration list for PBXNativeTarget "Delete Photos UI Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F52F6CC2EAEBA6500E44284 /* Debug */,
+				8F52F6CD2EAEBA6500E44284 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F52F6D82EAEBA8000E44284 /* Build configuration list for PBXNativeTarget "Delete Photos Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F52F6D92EAEBA8000E44284 /* Debug */,
+				8F52F6DA2EAEBA8000E44284 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

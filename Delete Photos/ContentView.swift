@@ -45,6 +45,13 @@ struct ContentView: View {
                 .frame(maxHeight: .infinity)
                 .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
+                if !photos.isEmpty && currentImage != nil {
+                    Text("\(currentIndex) / \(photos.count)")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding(.bottom, 8)
+                        .transition(.opacity)
+                }
                 ZStack {
                     HStack {
                         Spacer() // pushes the settings to the right
@@ -73,6 +80,24 @@ struct ContentView: View {
                             )
                     }
                     .disabled(selectedForDeletion.isEmpty)
+                    HStack {
+                        Button(action: shareCurrentPhoto) {
+                            Image(systemName: "square.and.arrow.up")
+                                .font(.system(size: 22))
+                                .foregroundStyle(Color.primary) // automatically adapts to light/dark mode
+                                .padding()
+                                .background(
+                                    Circle()
+                                        .fill(.ultraThinMaterial)
+                                        .opacity(0.1)
+                                )
+                        }
+                        .disabled(currentImage == nil)
+                        .glassEffect(
+                            in: .circle
+                        )
+                        Spacer()
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -248,4 +273,15 @@ struct ContentView: View {
         lastNewestID = nil
         loadPhotos()
     }
+    private func shareCurrentPhoto() {
+        guard let image = currentImage else { return }
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+
+        // Present the share sheet
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootVC = scene.windows.first?.rootViewController {
+            rootVC.present(activityVC, animated: true)
+        }
+    }
+
 }

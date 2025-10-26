@@ -19,7 +19,7 @@ struct SettingsView: View {
                         )
                         .foregroundStyle(Color.black)
                 }
-                Text("Resetting will put all photos you kept back.")
+                Text("Resetting will put all photos back that haven't been deleted.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                 Spacer()
