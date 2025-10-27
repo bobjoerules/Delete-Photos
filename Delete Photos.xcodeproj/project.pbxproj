@@ -411,7 +411,7 @@
 				DEVELOPMENT_TEAM = H9X2W7T5H7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Swip Delete";
+				INFOPLIST_KEY_CFBundleDisplayName = "Swipe Delete";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app needs permission to modify or delete selected photos.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photos to view and manage them.";
@@ -448,7 +448,7 @@
 				DEVELOPMENT_TEAM = H9X2W7T5H7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Swip Delete";
+				INFOPLIST_KEY_CFBundleDisplayName = "Swipe Delete";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app needs permission to modify or delete selected photos.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app needs access to your photos to view and manage them.";

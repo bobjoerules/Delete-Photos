@@ -9,8 +9,62 @@ struct ContentView: View {
     @State private var selectedForDeletion: Set<Int> = []
     @State private var lastNewestID: String?
     @State private var displayedNewPhotos: Set<String> = []
+    @State private var currentEmoji = "😀"
+    let emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥴", "😵", "😵‍💫", "😱", "😨", "😰", "😥", "😓", "🤗", "🫣", "🫢", "🤔", "🤭", "🤫", "🤥", "😶", "😶‍🌫️", "😐", "😑", "😬", "🫠", "😴", "🤤", "😪", "😮‍💨", "😮", "😯", "😲", "😧", "😦", "😮‍💨", "🥹", "😇"]
+    init() {
+            _currentEmoji = State(initialValue: emojis.randomElement() ?? "😀")
+        }
     var body: some View {
         NavigationStack {
+            ZStack {
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: SettingsView(
+                        resetData: resetData,
+                        skipToLastPhoto: {
+                            guard !photos.isEmpty else { return }
+                            currentIndex = photos.count - 1
+                            showPhoto()
+                        }
+                    )) {
+                        Image(systemName: "gearshape")
+                            .font(.system(size: 22))
+                            .foregroundStyle(Color.primary) // automatically adapts to light/dark mode
+                            .padding()
+                            .background(
+                                Circle()
+                                    .fill(.ultraThinMaterial)
+                                    .opacity(0.1)
+                            )
+                    }
+                    .glassEffect(
+                        in: .circle
+                    )
+                }
+                Text("Swipe Delete")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding()
+                HStack {
+                    Button(action: {
+                        currentEmoji = emojis.randomElement() ?? "😀"
+                    }) {
+                        Text(currentEmoji)
+                            .font(.system(size: 22))
+                            .padding()
+                            .background(
+                                Circle()
+                                    .fill(.ultraThinMaterial)
+                                    .opacity(0.1)
+                            )
+                    }
+                    .glassEffect(
+                        in: .circle
+                    )
+                    Spacer()
+                }
+            }
+            .padding(.horizontal)
             VStack {
                 VStack {
                     ZStack {
@@ -24,7 +78,9 @@ struct ContentView: View {
                                 .scaleEffect(1 - min(abs(swipeOffset.width)/500, 0.5))
                                 .gesture(
                                     DragGesture()
-                                        .onChanged { value in swipeOffset = value.translation }
+                                        .onChanged {
+                                            value in swipeOffset = CGSize(width: value.translation.width, height: 0)
+                                        }
                                         .onEnded { value in handleSwipe(value: value) }
                                 )
                                 .overlay(
@@ -54,33 +110,7 @@ struct ContentView: View {
                 }
                 ZStack {
                     HStack {
-                        Spacer() // pushes the settings to the right
-                        NavigationLink(destination: SettingsView(resetData: resetData)) {
-                            Image(systemName: "gearshape")
-                                .font(.system(size: 22))
-                                .foregroundStyle(Color.primary) // automatically adapts to light/dark mode
-                                .padding()
-                                .background(
-                                    Circle()
-                                        .fill(.ultraThinMaterial)
-                                        .opacity(0.1)
-                                )
-                        }
-                        .glassEffect(
-                            in: .circle
-                        )
-                    }
-                    Button(action: deleteSelectedPhotos) {
-                        Label("Delete Selected", systemImage: "trash")
-                            .padding()
-                            .foregroundStyle(.black)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                .fill(selectedForDeletion.isEmpty ? Color.red.opacity(0.1) : Color.red)
-                            )
-                    }
-                    .disabled(selectedForDeletion.isEmpty)
-                    HStack {
+                        Spacer()
                         Button(action: shareCurrentPhoto) {
                             Image(systemName: "square.and.arrow.up")
                                 .font(.system(size: 22))
@@ -96,6 +126,31 @@ struct ContentView: View {
                         .glassEffect(
                             in: .circle
                         )
+                    }
+                    Button(action: deleteSelectedPhotos) {
+                        Label("Delete Selected", systemImage: "trash")
+                            .padding()
+                            .foregroundStyle(.black)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                .fill(selectedForDeletion.isEmpty ? Color.red.opacity(0.1) : Color.red)
+                            )
+                    }
+                    .disabled(selectedForDeletion.isEmpty)
+                    HStack {
+                        Button(action: undoLastSwipe) {
+                            Image(systemName: "arrow.uturn.backward.circle")
+                                .font(.system(size: 22))
+                                .foregroundStyle(Color.primary)
+                                .padding()
+                                .background(
+                                    Circle()
+                                        .fill(.ultraThinMaterial)
+                                        .opacity(0.1)
+                                )
+                        }
+                        .glassEffect(in: .circle)
+                        .disabled(currentIndex == 0)
                         Spacer()
                     }
                 }
@@ -283,5 +338,12 @@ struct ContentView: View {
             rootVC.present(activityVC, animated: true)
         }
     }
-
+    private func undoLastSwipe() {
+        guard currentIndex > 0 else { return }
+        withAnimation(.spring()) {
+            currentIndex -= 1
+            selectedForDeletion.remove(currentIndex)
+            showPhoto()
+        }
+    }
 }

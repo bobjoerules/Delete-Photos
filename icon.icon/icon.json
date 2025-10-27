@@ -9,16 +9,16 @@
           "glass" : false,
           "image-name-specializations" : [
             {
-              "value" : "image.png"
+              "value" : "white3.png"
             },
             {
               "appearance" : "dark",
-              "value" : "image2.png"
+              "value" : "black3.png"
             }
           ],
-          "name" : "image2",
+          "name" : "black3",
           "position" : {
-            "scale" : 1.25,
+            "scale" : 4,
             "translation-in-points" : [
               0,
               0
