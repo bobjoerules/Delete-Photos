@@ -1,46 +1,35 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("hapticsEnabled") private var hapticsEnabled = true
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
     let resetData: () -> Void
     let skipToLastPhoto: () -> Void
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     var body: some View {
         NavigationStack {
-            VStack(spacing: 32) {
-                Button(action: {
-                    resetData()
-                    dismiss()
-                }) {
-                    Label("Reset", systemImage: "arrow.clockwise")
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.red)
-                        )
-                        .foregroundStyle(Color(.systemBackground))
+            Form {
+                Section {
+                    Toggle("Haptic Feedback", isOn: $hapticsEnabled)
+                    Button {
+                        resetData()
+                        dismiss()
+                        impact.impactOccurred()
+                    } label: {
+                        Label("Reset Swipes", systemImage: "arrow.clockwise")
+                    }
+                    .foregroundColor(.red)
+                    
+                    Button {
+                        skipToLastPhoto()
+                        impact.impactOccurred()
+                    } label: {
+                        Label("Skip to Last Photo", systemImage: "arrow.left")
+                    }
                 }
-                Text("Resetting will put all photos back that haven't been deleted.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                Button(action: {
-                    skipToLastPhoto()
-                }) {
-                    Label("Skip", systemImage: "arrow.left")
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.primary)
-                        )
-                        .foregroundStyle(Color(.systemBackground))
-                }
-                Text("Skip to the last photo and wait for new photos (use this if you accidently clicked reset.)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                Spacer()
             }
-            .padding()
-            .navigationTitle("Settings/Tools")
+            .navigationTitle("Settings / Tools")
             .navigationBarTitleDisplayMode(.inline)
         }
     }

@@ -2,8 +2,10 @@ import SwiftUI
 import Photos
 import PhotosUI
 struct ContentView: View {
+    @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     @State private var photos: [PHAsset] = []
     @State private var currentIndex = 0
+    @State private var delaycurrentIndex = 0
     @State private var currentImage: UIImage?
     @State private var swipeOffset: CGSize = .zero
     @State private var selectedForDeletion: Set<Int> = []
@@ -11,6 +13,7 @@ struct ContentView: View {
     @State private var displayedNewPhotos: Set<String> = []
     @State private var currentEmoji = "😀"
     let emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥴", "😵", "😵‍💫", "😱", "😨", "😰", "😥", "😓", "🤗", "🫣", "🫢", "🤔", "🤭", "🤫", "🤥", "😶", "😶‍🌫️", "😐", "😑", "😬", "🫠", "😴", "🤤", "😪", "😮‍💨", "😮", "😯", "😲", "😧", "😦", "😮‍💨", "🥹", "😇"]
+    let impact = UIImpactFeedbackGenerator(style: .heavy)
     init() {
             _currentEmoji = State(initialValue: emojis.randomElement() ?? "😀")
         }
@@ -19,27 +22,20 @@ struct ContentView: View {
             ZStack {
                 HStack {
                     Spacer()
-                    NavigationLink(destination: SettingsView(
-                        resetData: resetData,
-                        skipToLastPhoto: {
-                            guard !photos.isEmpty else { return }
-                            currentIndex = photos.count - 1
-                            showPhoto()
+                    Button(action: {
+                        if hapticsEnabled {
+                            impact.impactOccurred()
                         }
-                    )) {
-                        Image(systemName: "gearshape")
+                        shareCurrentPhoto()
+                    }) {
+                        Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 22))
                             .foregroundStyle(Color.primary) // automatically adapts to light/dark mode
-                            .padding()
-                            .background(
-                                Circle()
-                                    .fill(.ultraThinMaterial)
-                                    .opacity(0.1)
-                            )
+                            .padding(10)
                     }
-                    .glassEffect(
-                        in: .circle
-                    )
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.circle)
+                    .disabled(currentImage == nil)
                 }
                 Text("Swipe Delete")
                     .font(.largeTitle)
@@ -48,19 +44,17 @@ struct ContentView: View {
                 HStack {
                     Button(action: {
                         currentEmoji = emojis.randomElement() ?? "😀"
+                        if hapticsEnabled {
+                            impact.impactOccurred()
+                        }
                     }) {
                         Text(currentEmoji)
                             .font(.system(size: 22))
-                            .padding()
-                            .background(
-                                Circle()
-                                    .fill(.ultraThinMaterial)
-                                    .opacity(0.1)
-                            )
+                            .padding(10)
                     }
-                    .glassEffect(
-                        in: .circle
-                    )
+                    .buttonStyle(.glass)
+                    .buttonBorderShape(.circle)
+                    .buttonRepeatBehavior(.enabled)
                     Spacer()
                 }
             }
@@ -83,18 +77,22 @@ struct ContentView: View {
                                         }
                                         .onEnded { value in handleSwipe(value: value) }
                                 )
-                                .overlay(
-                                    selectedForDeletion.contains(currentIndex) ?
+                        } else {
+                            Text("No photo loaded")
+                                .foregroundStyle(.secondary)
+                        }
+                        VStack {
+                            HStack {
+                                Spacer()
+                                if selectedForDeletion.contains(currentIndex) {
                                     Image(systemName: "trash.circle.fill")
                                         .resizable()
                                         .frame(width: 50, height: 50)
                                         .foregroundColor(.red)
-                                        .padding() : nil,
-                                    alignment: .topTrailing
-                                )
-                        } else {
-                            Text("No photo loaded")
-                                .foregroundStyle(.secondary)
+                                        .padding()
+                                }
+                            }
+                            Spacer()
                         }
                     }
                 }
@@ -111,46 +109,58 @@ struct ContentView: View {
                 ZStack {
                     HStack {
                         Spacer()
-                        Button(action: shareCurrentPhoto) {
-                            Image(systemName: "square.and.arrow.up")
+                        NavigationLink(destination: SettingsView(
+                            resetData: resetData,
+                            skipToLastPhoto: {
+                                guard !photos.isEmpty else { return }
+                                currentIndex = photos.count - 1
+                                delaycurrentIndex = photos.count - 1
+                                showPhoto()
+                            }
+                        )) {
+                            Image(systemName: "gearshape")
                                 .font(.system(size: 22))
                                 .foregroundStyle(Color.primary) // automatically adapts to light/dark mode
-                                .padding()
-                                .background(
-                                    Circle()
-                                        .fill(.ultraThinMaterial)
-                                        .opacity(0.1)
-                                )
+                                .padding(10)
                         }
-                        .disabled(currentImage == nil)
-                        .glassEffect(
-                            in: .circle
-                        )
+                        .buttonStyle(.glass)
+                        .buttonBorderShape(.circle)
+                        .simultaneousGesture(TapGesture().onEnded {
+                            if hapticsEnabled {
+                                impact.impactOccurred()
+                            }
+                        })
                     }
-                    Button(action: deleteSelectedPhotos) {
+                    Button(action: {
+                        if hapticsEnabled {
+                            impact.impactOccurred()
+                        }
+                        deleteSelectedPhotos()
+                    }) {
                         Label("Delete Selected", systemImage: "trash")
                             .padding()
-                            .foregroundStyle(.black)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                .fill(selectedForDeletion.isEmpty ? Color.red.opacity(0.1) : Color.red)
-                            )
                     }
+                    .buttonStyle(.glassProminent)
+                    .tint(.red)
                     .disabled(selectedForDeletion.isEmpty)
                     HStack {
-                        Button(action: undoLastSwipe) {
+                        Button(action: {
+                            if hapticsEnabled {
+                                if currentIndex > 0 {
+                                    impact.impactOccurred()
+                                }
+                            }
+                            undoLastSwipe()
+                        }) {
                             Image(systemName: "arrow.uturn.backward.circle")
                                 .font(.system(size: 22))
-                                .foregroundStyle(Color.primary)
-                                .padding()
-                                .background(
-                                    Circle()
-                                        .fill(.ultraThinMaterial)
-                                        .opacity(0.1)
-                                )
+                                .foregroundStyle(Color.primary.opacity(delaycurrentIndex == 0 ? 0.3 : 1.0))
+                                .padding(10)
                         }
-                        .glassEffect(in: .circle)
-                        .disabled(currentIndex == 0)
+                        .buttonStyle(.glass)
+                        .buttonBorderShape(.circle)
+                        .buttonRepeatBehavior(.enabled)
+                        .disabled(delaycurrentIndex == 0)
                         Spacer()
                     }
                 }
@@ -186,12 +196,18 @@ struct ContentView: View {
                 swipeOffset = .zero
                 markNewPhotoAsDisplayed()
                 showNextPhoto()
+                if hapticsEnabled {
+                    impact.impactOccurred()
+                }
             }
         } else if value.translation.width > threshold {
             withAnimation(.spring()) {
                 swipeOffset = .zero
                 markNewPhotoAsDisplayed()
                 showNextPhoto()
+                if hapticsEnabled {
+                    impact.impactOccurred()
+                }
             }
         } else {
             withAnimation(.spring()) {
@@ -221,6 +237,7 @@ struct ContentView: View {
     }
     private func showNextPhoto() {
         currentIndex += 1
+        delaycurrentIndex += 1
         if currentIndex < photos.count {
             showPhoto()
         } else {
@@ -296,9 +313,11 @@ struct ContentView: View {
                         selectedForDeletion.subtract(indexesToDelete)
                         if let newIndex = photos.firstIndex(of: currentAsset) {
                             currentIndex = newIndex
+                            delaycurrentIndex = 0
                             showPhoto()
                         } else {
                             currentIndex = 0
+                            delaycurrentIndex = 0
                             showPhoto()
                         }
                     } else {
@@ -323,6 +342,7 @@ struct ContentView: View {
         photos.removeAll()
         currentImage = nil
         currentIndex = 0
+        delaycurrentIndex = 0
         selectedForDeletion.removeAll()
         displayedNewPhotos.removeAll()
         lastNewestID = nil
@@ -342,6 +362,10 @@ struct ContentView: View {
         guard currentIndex > 0 else { return }
         withAnimation(.spring()) {
             currentIndex -= 1
+            Task {
+                    try await Task.sleep(for: .seconds(0.5))
+                    delaycurrentIndex -= 1
+                }
             selectedForDeletion.remove(currentIndex)
             showPhoto()
         }
