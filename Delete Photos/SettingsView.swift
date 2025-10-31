@@ -1,5 +1,4 @@
 import SwiftUI
-
 struct SettingsView: View {
     @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     let impact = UIImpactFeedbackGenerator(style: .heavy)

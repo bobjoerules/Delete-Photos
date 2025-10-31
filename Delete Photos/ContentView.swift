@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var lastNewestID: String?
     @State private var displayedNewPhotos: Set<String> = []
     @State private var currentEmoji = "😀"
-    let emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥴", "😵", "😵‍💫", "😱", "😨", "😰", "😥", "😓", "🤗", "🫣", "🫢", "🤔", "🤭", "🤫", "🤥", "😶", "😶‍🌫️", "😐", "😑", "😬", "🫠", "😴", "🤤", "😪", "😮‍💨", "😮", "😯", "😲", "😧", "😦", "😮‍💨", "🥹", "😇"]
+    let emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥴", "😵", "😵‍💫", "😱", "😨", "😰", "😥", "😓", "🤗", "🫣", "🫢", "🤔", "🤭", "🤫", "🤥", "😶", "😶‍🌫️", "😐", "😑", "😬", "🫠", "😴", "🤤", "😪", "😮‍💨", "😮", "😯", "😲", "😧", "😦", "😮‍💨", "🥹", "😇", "🤠", "💀"]
     let impact = UIImpactFeedbackGenerator(style: .heavy)
     init() {
             _currentEmoji = State(initialValue: emojis.randomElement() ?? "😀")
@@ -20,6 +20,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+// MARK: - Share Button
                 HStack {
                     Spacer()
                     Button(action: {
@@ -41,6 +42,7 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .bold()
                     .padding()
+// MARK: - Emoji Button
                 HStack {
                     Button(action: {
                         currentEmoji = emojis.randomElement() ?? "😀"
@@ -61,6 +63,7 @@ struct ContentView: View {
             .padding(.horizontal)
             VStack {
                 VStack {
+// MARK: - Current Photo
                     ZStack {
                         if let currentImage = currentImage {
                             Image(uiImage: currentImage)
@@ -81,6 +84,7 @@ struct ContentView: View {
                             Text("No photo loaded")
                                 .foregroundStyle(.secondary)
                         }
+// MARK: - Selected For Deletion Indicator
                         VStack {
                             HStack {
                                 Spacer()
@@ -107,6 +111,7 @@ struct ContentView: View {
                         .transition(.opacity)
                 }
                 ZStack {
+// MARK: - Settings Button
                     HStack {
                         Spacer()
                         NavigationLink(destination: SettingsView(
@@ -131,6 +136,7 @@ struct ContentView: View {
                             }
                         })
                     }
+// MARK: - Delete Selected Button
                     Button(action: {
                         if hapticsEnabled {
                             impact.impactOccurred()
@@ -141,8 +147,10 @@ struct ContentView: View {
                             .padding()
                     }
                     .buttonStyle(.glassProminent)
-                    .tint(.red)
+                    .tint(selectedForDeletion.isEmpty ? .gray : .red)
+                    .opacity(selectedForDeletion.isEmpty ? 0.3 : 1)
                     .disabled(selectedForDeletion.isEmpty)
+// MARK: - Undo Swipe Button
                     HStack {
                         Button(action: {
                             if hapticsEnabled {
@@ -185,6 +193,7 @@ struct ContentView: View {
             }
         }
     }
+// MARK: - Swipe Handling
     private func handleSwipe(value: DragGesture.Value) {
         let threshold: CGFloat = 100
 
@@ -215,12 +224,14 @@ struct ContentView: View {
             }
         }
     }
+// MARK: - Mark Photo As Displayed
     private func markNewPhotoAsDisplayed() {
         guard currentIndex < photos.count else { return }
         let assetID = photos[currentIndex].localIdentifier
         displayedNewPhotos.insert(assetID)
         UserDefaults.standard.set(Array(displayedNewPhotos), forKey: "displayedNewPhotos")
     }
+// MARK: - Show Photo
     private func showPhoto() {
         guard currentIndex < photos.count else { currentImage = nil; return }
         let manager = PHImageManager.default()
@@ -235,6 +246,7 @@ struct ContentView: View {
             }
         }
     }
+// MARK: - Show Next Photo
     private func showNextPhoto() {
         currentIndex += 1
         delaycurrentIndex += 1
@@ -251,7 +263,7 @@ struct ContentView: View {
             }
         }
     }
-    // MARK: - Load Photos
+// MARK: - Load Photos
     private func loadPhotos() {
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
             guard status == .authorized || status == .limited else { return }
@@ -296,6 +308,7 @@ struct ContentView: View {
             }
         }
     }
+// MARK: - Delete Selected Photos
     private func deleteSelectedPhotos() {
         guard !selectedForDeletion.isEmpty else { return }
         let indexesToDelete = selectedForDeletion.filter { $0 != currentIndex }
@@ -327,6 +340,7 @@ struct ContentView: View {
             }
         }
     }
+// MARK: - Save Current State
     private func saveCurrentState() {
         if currentIndex < photos.count {
             UserDefaults.standard.set(photos[currentIndex].localIdentifier, forKey: "lastViewedPhoto")
@@ -334,6 +348,7 @@ struct ContentView: View {
         UserDefaults.standard.set(Array(displayedNewPhotos), forKey: "displayedNewPhotos")
         UserDefaults.standard.set(Array(selectedForDeletion), forKey: "selectedForDeletion")
     }
+// MARK: - Reset Data
     private func resetData() {
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "lastViewedPhoto")
@@ -348,6 +363,7 @@ struct ContentView: View {
         lastNewestID = nil
         loadPhotos()
     }
+// MARK: - Share Photo
     private func shareCurrentPhoto() {
         guard let image = currentImage else { return }
         let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
@@ -358,6 +374,7 @@ struct ContentView: View {
             rootVC.present(activityVC, animated: true)
         }
     }
+// MARK: - Undo Swipe
     private func undoLastSwipe() {
         guard currentIndex > 0 else { return }
         withAnimation(.spring()) {
