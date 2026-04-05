@@ -14,9 +14,9 @@ A landing page for the application is available in the `website` directory.
 
 ## Screenshots
 
-| Homepage | Delete | Settings |
-| :---: | :---: | :---: |
-| <img src="screenshots/homepage.png" width="200"> | <img src="screenshots/updated-delete.png" width="200"> | <img src="screenshots/settings.png" width="200"> |
+| Homepage | Delete Dialog | Animation | Settings |
+| :---: | :---: | :---: | :---: |
+| <img src="screenshots/homescreen.png" width="180"> | <img src="screenshots/deletepopup.png" width="180"> | <img src="screenshots/deleteing-animation.png" width="180"> | <img src="screenshots/settingspage.png" width="180"> |
 
 ## Technical Overview
 The project is built with Swift and SwiftUI.
