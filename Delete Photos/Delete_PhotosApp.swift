@@ -1,6 +1,6 @@
 //
 //  Delete_PhotosApp.swift
-//  Delete Photos
+//  Swipe Delete
 //
 //  Created by Bobjoerules on 10/25/25.
 //
