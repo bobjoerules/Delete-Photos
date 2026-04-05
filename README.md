@@ -16,7 +16,7 @@ A landing page for the application is available in the `website` directory.
 
 | Homepage | Delete | Settings |
 | :---: | :---: | :---: |
-| <img src="screenshots/homepage.png" width="200"> | <img src="screenshots/delete.png" width="200"> | <img src="screenshots/settings.png" width="200"> |
+| <img src="screenshots/homepage.png" width="200"> | <img src="screenshots/updated-delete.png" width="200"> | <img src="screenshots/settings.png" width="200"> |
 
 ## Technical Overview
 The project is built with Swift and SwiftUI.
