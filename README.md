@@ -12,10 +12,11 @@ A landing page for the application is available in the `website` directory.
 - Configurable settings for library management.
 - Visual review system for media identification.
 
-## Navigation
-![Screenshot of App.](screenshots/homepage.png)
-![Screenshot of delete.](screenshots/delete.png)
-![Screenshot of settings.](screenshots/settings.png)
+## Screenshots
+
+| Homepage | Delete | Settings |
+| :---: | :---: | :---: |
+| <img src="screenshots/homepage.png" width="200"> | <img src="screenshots/delete.png" width="200"> | <img src="screenshots/settings.png" width="200"> |
 
 ## Technical Overview
 The project is built with Swift and SwiftUI.
