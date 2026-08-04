@@ -346,9 +346,17 @@ struct HiddenVaultView: View {
     private func deleteOriginalAssets(with localIdentifiers: [String]) {
         let assets = PHAsset.fetchAssets(withLocalIdentifiers: localIdentifiers, options: nil)
         guard assets.count > 0 else { return }
+        let countDeleted = assets.count
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.deleteAssets(assets)
-        }, completionHandler: { _, _ in })
+        }, completionHandler: { success, _ in
+            if success {
+                DispatchQueue.main.async {
+                    let currentTotal = UserDefaults.standard.integer(forKey: "totalPhotosDeleted")
+                    UserDefaults.standard.set(currentTotal + countDeleted, forKey: "totalPhotosDeleted")
+                }
+            }
+        })
     }
 }
 

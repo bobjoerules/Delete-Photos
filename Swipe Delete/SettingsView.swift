@@ -6,6 +6,10 @@ struct SettingsView: View {
     @AppStorage("flashFeedbackEnabled") private var flashFeedbackEnabled = true
     @AppStorage("flipSwipeDirections") private var flipSwipeDirections = false
     
+    @AppStorage("totalPhotosDeleted") private var totalPhotosDeleted = 0
+    
+    @AppStorage("totalSwipes") private var totalSwipes = 0
+    
     // Hidden toggle starts as false, revealed by pulling down (scrolling up)
     @State private var showHiddenToggle = false
     
@@ -21,6 +25,35 @@ struct SettingsView: View {
                     Toggle("Hidden Folder", isOn: $hiddenFolderEnabled)
                 }
                 .transition(.move(edge: .top).combined(with: .opacity))
+            }
+            
+            Section(header: Text("Statistics")) {
+                HStack(spacing: 20) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("TOTAL DELETED")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        Text("\(totalPhotosDeleted)")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.red)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("SWIPES")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        Text("\(totalSwipes)")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.green)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.vertical, 4)
             }
             
             Section {

@@ -16,15 +16,6 @@ struct PasscodeLockscreenView: View {
     
     var body: some View {
         ZStack {
-            // Dark glassmorphic background overlay
-            Color.black.opacity(0.35)
-                .ignoresSafeArea()
-            
-            Rectangle()
-                .fill(.ultraThinMaterial)
-                .opacity(0.4)
-                .ignoresSafeArea()
-            
             VStack {
                 Spacer()
                 

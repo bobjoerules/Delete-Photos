@@ -327,6 +327,8 @@ struct ContentView: View {
     private func showNextPhoto() {
         currentIndex += 1
         delaycurrentIndex += 1
+        let currentSwipes = UserDefaults.standard.integer(forKey: "totalSwipes")
+        UserDefaults.standard.set(currentSwipes + 1, forKey: "totalSwipes")
         if currentIndex < photos.count {
             showPhoto()
         } else {
@@ -417,6 +419,9 @@ struct ContentView: View {
                             photos.removeAll { assetsToDelete.contains($0) }
                             selectedForDeletion.subtract(idsToDelete)
                             UserDefaults.standard.set(Array(selectedForDeletion), forKey: "selectedForDeletion")
+                            
+                            let currentTotal = UserDefaults.standard.integer(forKey: "totalPhotosDeleted")
+                            UserDefaults.standard.set(currentTotal + assetsToDelete.count, forKey: "totalPhotosDeleted")
                             
                             if let currentAsset = currentAsset, let newIndex = photos.firstIndex(of: currentAsset) {
                                 currentIndex = newIndex
