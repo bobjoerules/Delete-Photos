@@ -168,10 +168,10 @@ struct ContentView: View {
                     }) {
                         Label("Delete Selected", systemImage: "trash")
                             .padding()
+                            .opacity(selectedForDeletion.isEmpty ? 0.3 : 1)
                     }
                     .buttonStyle(.glassProminent)
                     .tint(selectedForDeletion.isEmpty ? .gray : .red)
-                    .opacity(selectedForDeletion.isEmpty ? 0.3 : 1)
                     .disabled(selectedForDeletion.isEmpty)
                     HStack {
                         Button(action: {
@@ -239,6 +239,11 @@ struct ContentView: View {
                     loadPhotos()
                 }
             }
+        .onChange(of: showHiddenVault) { oldValue, newValue in
+            if !newValue {
+                loadPhotos()
+            }
+        }
 
             if showingPasscodePrompt {
                 PasscodeLockscreenView(
@@ -338,31 +343,32 @@ struct ContentView: View {
     private func loadPhotos() {
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
             guard status == .authorized || status == .limited else { return }
-            let fetchOptions = PHFetchOptions()
-            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-            let results = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-            var assets: [PHAsset] = []
-            results.enumerateObjects { asset, _, _ in assets.append(asset) }
             DispatchQueue.main.async {
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+                let results = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+                var assets: [PHAsset] = []
+                results.enumerateObjects { asset, _, _ in assets.append(asset) }
+                
                 let defaults = UserDefaults.standard
                 let lastNewestID = defaults.string(forKey: "lastNewestPhoto")
                 let lastViewedID = defaults.string(forKey: "lastViewedPhoto")
                 self.displayedNewPhotos = Set(defaults.stringArray(forKey: "displayedNewPhotos") ?? [])
                 self.selectedForDeletion = Set(defaults.stringArray(forKey: "selectedForDeletion") ?? [])
+                
+                // Clean up stale selections not present in library
+                let libraryIDs = Set(assets.map { $0.localIdentifier })
+                self.selectedForDeletion = self.selectedForDeletion.intersection(libraryIDs)
+                defaults.set(Array(self.selectedForDeletion), forKey: "selectedForDeletion")
+                
                 var newPhotos: [PHAsset] = []
-                var oldPhotos: [PHAsset] = []
                 if let lastNewestID = lastNewestID,
                    let lastIndex = assets.firstIndex(where: { $0.localIdentifier == lastNewestID }),
                    lastIndex > 0 {
                     newPhotos = Array(assets[0..<lastIndex])
                 }
                 newPhotos = newPhotos.filter { !displayedNewPhotos.contains($0.localIdentifier) }
-                if let lastViewedID = lastViewedID,
-                   let lastViewedIndex = assets.firstIndex(where: { $0.localIdentifier == lastViewedID }) {
-                    oldPhotos = Array(assets[lastViewedIndex...])
-                } else {
-                    oldPhotos = assets
-                }
+                let oldPhotos = assets
                 let combined = Array(NSOrderedSet(array: newPhotos + oldPhotos)) as! [PHAsset]
                 let filtered = combined.filter { !selectedForDeletion.contains($0.localIdentifier) }
                 self.photos = filtered
@@ -375,6 +381,7 @@ struct ContentView: View {
                 } else {
                     self.currentIndex = 0
                 }
+                self.delaycurrentIndex = self.currentIndex
                 self.showPhoto()
                 if let newest = assets.first {
                     defaults.set(newest.localIdentifier, forKey: "lastNewestPhoto")
@@ -393,34 +400,36 @@ struct ContentView: View {
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
             guard status == .authorized else { return }
             
-            let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: Array(idsToDelete), options: nil)
-            var assetsToDelete: [PHAsset] = []
-            fetchResult.enumerateObjects { asset, _, _ in
-                assetsToDelete.append(asset)
-            }
-            guard !assetsToDelete.isEmpty else { return }
-            
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.deleteAssets(assetsToDelete as NSArray)
-            }) { success, error in
-                DispatchQueue.main.async {
-                    if success {
-                        let currentAsset = currentIndex < photos.count ? photos[currentIndex] : nil
-                        photos.removeAll { assetsToDelete.contains($0) }
-                        selectedForDeletion.subtract(idsToDelete)
-                        UserDefaults.standard.set(Array(selectedForDeletion), forKey: "selectedForDeletion")
-                        
-                        if let currentAsset = currentAsset, let newIndex = photos.firstIndex(of: currentAsset) {
-                            currentIndex = newIndex
-                            delaycurrentIndex = 0
-                            showPhoto()
+            DispatchQueue.main.async {
+                let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: Array(idsToDelete), options: nil)
+                var assetsToDelete: [PHAsset] = []
+                fetchResult.enumerateObjects { asset, _, _ in
+                    assetsToDelete.append(asset)
+                }
+                guard !assetsToDelete.isEmpty else { return }
+                
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.deleteAssets(assetsToDelete as NSArray)
+                }) { success, error in
+                    DispatchQueue.main.async {
+                        if success {
+                            let currentAsset = currentIndex < photos.count ? photos[currentIndex] : nil
+                            photos.removeAll { assetsToDelete.contains($0) }
+                            selectedForDeletion.subtract(idsToDelete)
+                            UserDefaults.standard.set(Array(selectedForDeletion), forKey: "selectedForDeletion")
+                            
+                            if let currentAsset = currentAsset, let newIndex = photos.firstIndex(of: currentAsset) {
+                                currentIndex = newIndex
+                                delaycurrentIndex = newIndex
+                                showPhoto()
+                            } else {
+                                currentIndex = 0
+                                delaycurrentIndex = 0
+                                showPhoto()
+                            }
                         } else {
-                            currentIndex = 0
-                            delaycurrentIndex = 0
-                            showPhoto()
+                            print("Error deleting: \(error?.localizedDescription ?? "unknown")")
                         }
-                    } else {
-                        print("Error deleting: \(error?.localizedDescription ?? "unknown")")
                     }
                 }
             }
@@ -444,7 +453,7 @@ struct ContentView: View {
     }
     private func shareCurrentPhoto() {
         guard let image = currentImage else { return }
-        let itemSource = ImageActivityItemSource(image: image, title: "Shared Photo")
+        let itemSource = ImageActivityItemSource(image: image, title: "Share Photo")
         let activityVC = UIActivityViewController(activityItems: [itemSource], applicationActivities: nil)
 
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

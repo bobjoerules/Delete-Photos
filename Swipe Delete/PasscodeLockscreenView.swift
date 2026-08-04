@@ -9,6 +9,7 @@ struct PasscodeLockscreenView: View {
     @State private var errorText: String? = nil
     @State private var shakeOffset: CGFloat = 0
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     private let impact = UIImpactFeedbackGenerator(style: .medium)
     private let feedbackGenerator = UINotificationFeedbackGenerator()
@@ -16,94 +17,93 @@ struct PasscodeLockscreenView: View {
     var body: some View {
         ZStack {
             // Dark glassmorphic background overlay
-            Color.black.opacity(0.4)
+            Color.black.opacity(0.35)
                 .ignoresSafeArea()
             
             Rectangle()
                 .fill(.ultraThinMaterial)
+                .opacity(0.4)
                 .ignoresSafeArea()
             
             VStack {
                 Spacer()
                 
-                VStack(spacing: 40) {
-                    // Header Title
-                    VStack(spacing: 12) {
-                        Text(isCreating ? "Create Passcode" : "Enter Passcode")
-                            .font(.title2)
-                            .bold()
-                            .foregroundStyle(.primary)
-                        
-                        if let errorText = errorText {
-                            Text(errorText)
-                                .font(.footnote)
-                                .foregroundStyle(.red)
-                                .transition(.opacity)
-                        }
-                    }
-                    
-                    // Passcode Dot Indicators
-                    HStack(spacing: 24) {
-                        ForEach(0..<4) { index in
-                            Circle()
-                                .stroke(Color.primary.opacity(0.5), lineWidth: 2)
-                                .background(
-                                    Circle()
-                                        .fill(index < input.count ? Color.primary : Color.clear)
-                                )
-                                .frame(width: 16, height: 16)
-                                .scaleEffect(index < input.count ? 1.2 : 1.0)
-                                .animation(.spring(response: 0.2, dampingFraction: 0.5), value: input.count)
-                        }
-                    }
-                    .offset(x: shakeOffset)
-                    
-                    // Keypad Grid
-                    VStack(spacing: 18) {
-                        ForEach(0..<3) { row in
-                            HStack(spacing: 24) {
-                                ForEach(1..<4) { col in
-                                    let num = row * 3 + col
-                                    keypadButton(text: "\(num)") {
-                                        appendDigit("\(num)")
-                                    }
+                if verticalSizeClass == .compact {
+                    // Landscape layout: split side-by-side
+                    HStack(spacing: 50) {
+                        VStack(spacing: 24) {
+                            // Header Title
+                            VStack(spacing: 12) {
+                                Text(isCreating ? "Create Passcode" : "Enter Passcode")
+                                    .font(.title2)
+                                    .bold()
+                                    .foregroundStyle(.primary)
+                                
+                                if let errorText = errorText {
+                                    Text(errorText)
+                                        .font(.footnote)
+                                        .foregroundStyle(.red)
+                                        .transition(.opacity)
                                 }
                             }
+                            
+                            // Passcode Dot Indicators
+                            HStack(spacing: 24) {
+                                ForEach(0..<4) { index in
+                                    Circle()
+                                        .stroke(Color.primary.opacity(0.5), lineWidth: 2)
+                                        .background(
+                                            Circle()
+                                                .fill(index < input.count ? Color.primary : Color.clear)
+                                        )
+                                        .frame(width: 16, height: 16)
+                                        .scaleEffect(index < input.count ? 1.2 : 1.0)
+                                        .animation(.spring(response: 0.2, dampingFraction: 0.5), value: input.count)
+                                }
+                            }
+                            .offset(x: shakeOffset)
                         }
                         
-                        HStack(spacing: 24) {
-                            // Cancel Button
-                            Button(action: {
-                                playHaptic()
-                                onCancel()
-                            }) {
-                                Text("Cancel")
-                                    .font(.body)
-                                    .bold()
-                                    .frame(width: 75, height: 75)
-                                    .foregroundStyle(.primary)
-                            }
-                            
-                            // 0 Button
-                            keypadButton(text: "0") {
-                                appendDigit("0")
-                            }
-                            
-                            // Delete Button
-                            Button(action: {
-                                playHaptic()
-                                deleteDigit()
-                            }) {
-                                Image(systemName: "delete.left")
-                                    .font(.title2)
-                                    .frame(width: 75, height: 75)
-                                    .foregroundStyle(.primary)
-                            }
-                            .disabled(input.isEmpty)
-                            .opacity(input.isEmpty ? 0.3 : 1.0)
-                        }
+                        // Keypad Grid
+                        keypadGrid
                     }
-                    .buttonStyle(.plain)
+                } else {
+                    // Portrait layout: stacked vertically
+                    VStack(spacing: 40) {
+                        // Header Title
+                        VStack(spacing: 12) {
+                            Text(isCreating ? "Create Passcode" : "Enter Passcode")
+                                .font(.title2)
+                                .bold()
+                                .foregroundStyle(.primary)
+                            
+                            if let errorText = errorText {
+                                Text(errorText)
+                                    .font(.footnote)
+                                    .foregroundStyle(.red)
+                                    .transition(.opacity)
+                            }
+                        }
+                        
+                        // Passcode Dot Indicators
+                        HStack(spacing: 24) {
+                            ForEach(0..<4) { index in
+                                Circle()
+                                    .stroke(Color.primary.opacity(0.5), lineWidth: 2)
+                                    .background(
+                                        Circle()
+                                            .fill(index < input.count ? Color.primary : Color.clear)
+                                    )
+                                    .frame(width: 16, height: 16)
+                                    .scaleEffect(index < input.count ? 1.2 : 1.0)
+                                    .animation(.spring(response: 0.2, dampingFraction: 0.5), value: input.count)
+                            }
+                        }
+                        .offset(x: shakeOffset)
+                        
+                        // Keypad Grid
+                        keypadGrid
+                    }
                 }
                 
                 Spacer()
@@ -112,23 +112,76 @@ struct PasscodeLockscreenView: View {
         }
     }
     
+    // Keypad Grid View
+    private var keypadGrid: some View {
+        VStack(spacing: 18) {
+            let subtexts = ["", "A B C", "D E F", "G H I", "J K L", "M N O", "P Q R S", "T U V", "W X Y Z"]
+            ForEach(0..<3) { row in
+                HStack(spacing: 24) {
+                    ForEach(1..<4) { col in
+                        let num = row * 3 + col
+                        keypadButton(text: "\(num)", subtext: subtexts[num - 1]) {
+                            appendDigit("\(num)")
+                        }
+                    }
+                }
+            }
+            
+            HStack(spacing: 24) {
+                // Cancel Button
+                Button(action: {
+                    playHaptic()
+                    onCancel()
+                }) {
+                    Text("Cancel")
+                        .font(.body)
+                        .bold()
+                        .frame(width: 75, height: 75)
+                        .foregroundStyle(.primary)
+                }
+                
+                // 0 Button
+                keypadButton(text: "0") {
+                    appendDigit("0")
+                }
+                
+                // Delete Button
+                Button(action: {
+                    playHaptic()
+                    deleteDigit()
+                }) {
+                    Image(systemName: "delete.left")
+                        .font(.title2)
+                        .frame(width: 75, height: 75)
+                        .foregroundStyle(.primary)
+                }
+                .disabled(input.isEmpty)
+                .opacity(input.isEmpty ? 0.3 : 1.0)
+            }
+        }
+        .buttonStyle(.plain)
+    }
+    
     // Keypad circular button view helper
     @ViewBuilder
-    private func keypadButton(text: String, action: @escaping () -> Void) -> some View {
+    private func keypadButton(text: String, subtext: String = "", action: @escaping () -> Void) -> some View {
         Button(action: {
             playHaptic()
             action()
         }) {
-            Text(text)
-                .font(.title)
-                .frame(width: 75, height: 75)
-                .background(Color.primary.opacity(0.15))
-                .clipShape(Circle())
-                .overlay(
-                    Circle()
-                        .stroke(Color.primary.opacity(0.2), lineWidth: 1)
-                )
-                .foregroundStyle(.primary)
+            VStack(spacing: 0) {
+                Text(text)
+                    .font(.system(size: 30, weight: .light))
+                    .foregroundStyle(.primary)
+                if !subtext.isEmpty {
+                    Text(subtext)
+                        .font(.system(size: 9, weight: .semibold))
+                        .kerning(1)
+                        .foregroundStyle(.primary.opacity(0.6))
+                }
+            }
+            .frame(width: 75, height: 75)
+            .glassEffect(.regular.interactive(), in: Circle())
         }
     }
     

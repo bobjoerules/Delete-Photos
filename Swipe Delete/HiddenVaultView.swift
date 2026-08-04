@@ -258,30 +258,45 @@ struct HiddenVaultView: View {
 
     // MARK: - Import
 
+    @MainActor
     private func importAssets(_ items: [PhotosPickerItem]) async {
+        var idsToDelete: [String] = []
         for picked in items {
             if let type = picked.supportedContentTypes.first {
                 switch type.identifier {
                 case UTType.image.identifier:
-                    _ = await importImage(picked)
+                    if let id = await importImage(picked) {
+                        idsToDelete.append(id)
+                    }
                 case UTType.movie.identifier:
-                    _ = await importVideo(picked)
+                    if let id = await importVideo(picked) {
+                        idsToDelete.append(id)
+                    }
                 default:
                     // Try image first, then video fallback
-                    if await importImage(picked) == false {
-                        _ = await importVideo(picked)
+                    if let id = await importImage(picked) {
+                        idsToDelete.append(id)
+                    } else if let id = await importVideo(picked) {
+                        idsToDelete.append(id)
                     }
                 }
             } else {
                 // No supported types? Try image fallback.
-                _ = await importImage(picked)
+                if let id = await importImage(picked) {
+                    idsToDelete.append(id)
+                }
             }
+        }
+        
+        if !idsToDelete.isEmpty {
+            deleteOriginalAssets(with: idsToDelete)
         }
     }
 
-    private func importImage(_ item: PhotosPickerItem) async -> Bool {
-        guard let data = try? await item.loadTransferable(type: Data.self) else { return false }
-        guard let uiImage = UIImage(data: data) else { return false }
+    @MainActor
+    private func importImage(_ item: PhotosPickerItem) async -> String? {
+        guard let data = try? await item.loadTransferable(type: Data.self) else { return nil }
+        guard let uiImage = UIImage(data: data) else { return nil }
         var savedData: Data?
         var ext = "jpg"
         if let jpegData = uiImage.jpegData(compressionQuality: 0.9) {
@@ -291,24 +306,20 @@ struct HiddenVaultView: View {
             savedData = pngData
             ext = "png"
         }
-        guard let finalData = savedData else { return false }
+        guard let finalData = savedData else { return nil }
         let filename = "\(UUID().uuidString).\(ext)"
         let url = vault.url(for: VaultItem(id: UUID(), filename: filename, originalLocalIdentifier: nil))
-        if (try? finalData.write(to: url, options: [.atomic])) == nil { return false }
+        if (try? finalData.write(to: url, options: [.atomic])) == nil { return nil }
         let originalID = item.itemIdentifier
         let vaultItem = VaultItem(id: UUID(), filename: filename, originalLocalIdentifier: originalID)
-        await MainActor.run {
-            vault.add(item: vaultItem)
-        }
-        if let originalID {
-            deleteOriginalAsset(with: originalID)
-        }
-        return true
+        vault.add(item: vaultItem)
+        return originalID
     }
 
-    private func importVideo(_ item: PhotosPickerItem) async -> Bool {
+    @MainActor
+    private func importVideo(_ item: PhotosPickerItem) async -> String? {
         // Attempt to load raw data for the video from the picker
-        guard let data = try? await item.loadTransferable(type: Data.self) else { return false }
+        guard let data = try? await item.loadTransferable(type: Data.self) else { return nil }
 
         // Determine file extension from supported content type; default to mov
         let ext: String = {
@@ -323,21 +334,17 @@ struct HiddenVaultView: View {
         let filename = "\(UUID().uuidString).\(ext)"
         let tempItem = VaultItem(id: UUID(), filename: filename, originalLocalIdentifier: nil)
         let url = vault.url(for: tempItem)
-        if (try? data.write(to: url, options: [.atomic])) == nil { return false }
+        if (try? data.write(to: url, options: [.atomic])) == nil { return nil }
 
         let originalID = item.itemIdentifier
         let vaultItem = VaultItem(id: UUID(), filename: filename, originalLocalIdentifier: originalID)
-        await MainActor.run {
-            vault.add(item: vaultItem)
-        }
-        if let originalID {
-            deleteOriginalAsset(with: originalID)
-        }
-        return true
+        vault.add(item: vaultItem)
+        return originalID
     }
 
-    private func deleteOriginalAsset(with localIdentifier: String) {
-        let assets = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
+    @MainActor
+    private func deleteOriginalAssets(with localIdentifiers: [String]) {
+        let assets = PHAsset.fetchAssets(withLocalIdentifiers: localIdentifiers, options: nil)
         guard assets.count > 0 else { return }
         PHPhotoLibrary.shared().performChanges({
             PHAssetChangeRequest.deleteAssets(assets)
