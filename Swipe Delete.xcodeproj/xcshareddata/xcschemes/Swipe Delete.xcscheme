@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "2600"
+   LastUpgradeVersion = "2700"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8F52F63E2EADB3A300E44284"
-               BuildableName = "Delete Photos.app"
-               BlueprintName = "Delete Photos"
-               ReferencedContainer = "container:Delete Photos.xcodeproj">
+               BuildableName = "Swipe Delete.app"
+               BlueprintName = "Swipe Delete"
+               ReferencedContainer = "container:Swipe Delete.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,30 +29,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8F52F6C22EAEBA6500E44284"
-               BuildableName = "Delete Photos UI Tests.xctest"
-               BlueprintName = "Delete Photos UI Tests"
-               ReferencedContainer = "container:Delete Photos.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8F52F6D12EAEBA8000E44284"
-               BuildableName = "Delete Photos Tests.xctest"
-               BlueprintName = "Delete Photos Tests"
-               ReferencedContainer = "container:Delete Photos.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -69,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F52F63E2EADB3A300E44284"
-            BuildableName = "Delete Photos.app"
-            BlueprintName = "Delete Photos"
-            ReferencedContainer = "container:Delete Photos.xcodeproj">
+            BuildableName = "Swipe Delete.app"
+            BlueprintName = "Swipe Delete"
+            ReferencedContainer = "container:Swipe Delete.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -86,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F52F63E2EADB3A300E44284"
-            BuildableName = "Delete Photos.app"
-            BlueprintName = "Delete Photos"
-            ReferencedContainer = "container:Delete Photos.xcodeproj">
+            BuildableName = "Swipe Delete.app"
+            BlueprintName = "Swipe Delete"
+            ReferencedContainer = "container:Swipe Delete.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
