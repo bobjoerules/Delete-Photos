@@ -12,23 +12,6 @@
 		8FA38CE52EB1BB1B0072A91D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FA38CE42EB1BB1B0072A91D /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		8F52F6C92EAEBA6500E44284 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F52F6372EADB3A300E44284 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8F52F63E2EADB3A300E44284;
-			remoteInfo = "Swipe Delete";
-		};
-		8F52F6D62EAEBA8000E44284 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F52F6372EADB3A300E44284 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8F52F63E2EADB3A300E44284;
-			remoteInfo = "Swipe Delete";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		8F52F63F2EADB3A300E44284 /* Swipe Delete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swipe Delete.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F52F66B2EADD61C00E44284 /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
@@ -144,20 +127,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F52F6C12EAEBA6500E44284 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F52F6D02EAEBA8000E44284 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -168,34 +137,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F52F6BF2EAEBA6500E44284 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8F52F6CE2EAEBA8000E44284 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		8F52F6CA2EAEBA6500E44284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8F52F63E2EADB3A300E44284 /* Swipe Delete */;
-			targetProxy = 8F52F6C92EAEBA6500E44284 /* PBXContainerItemProxy */;
-		};
-		8F52F6D72EAEBA8000E44284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8F52F63E2EADB3A300E44284 /* Swipe Delete */;
-			targetProxy = 8F52F6D62EAEBA8000E44284 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8F52F65E2EADB3A500E44284 /* Debug */ = {
@@ -343,7 +285,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "";
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -389,7 +331,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "";
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

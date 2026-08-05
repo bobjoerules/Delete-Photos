@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 import SwiftUI
 
 @main

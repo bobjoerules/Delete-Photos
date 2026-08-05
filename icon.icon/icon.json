@@ -6,22 +6,82 @@
     {
       "layers" : [
         {
-          "glass" : false,
-          "image-name-specializations" : [
-            {
-              "value" : "Lightmode.png"
-            },
-            {
-              "appearance" : "dark",
-              "value" : "darkode.png"
+          "fill" : {
+            "linear-gradient" : [
+              "display-p3:1.00000,0.00000,0.00000,1.00000",
+              "srgb:1.00000,0.00000,0.34689,1.00000"
+            ],
+            "orientation" : {
+              "start" : {
+                "x" : 0.04374384347111244,
+                "y" : 0.5
+              },
+              "stop" : {
+                "x" : 1,
+                "y" : 1
+              }
             }
-          ],
-          "name" : "black3",
+          },
+          "image-name" : "Layer 3.png",
+          "name" : "Layer 3",
           "position" : {
             "scale" : 1,
             "translation-in-points" : [
-              0,
-              0
+              92.1701264726671,
+              -236.5
+            ]
+          }
+        },
+        {
+          "blend-mode" : "normal",
+          "fill-specializations" : [
+            {
+              "value" : {
+                "linear-gradient" : [
+                  "display-p3:0.58421,0.20000,0.20000,1.00000",
+                  "srgb:0.00000,0.00000,0.00000,1.00000"
+                ],
+                "orientation" : {
+                  "start" : {
+                    "x" : 0.20150521662145496,
+                    "y" : 0.08869538439744448
+                  },
+                  "stop" : {
+                    "x" : 0.8422231490695319,
+                    "y" : 0.9626471132090871
+                  }
+                }
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "linear-gradient" : [
+                  "display-p3:0.58421,0.20000,0.20000,1.00000",
+                  "srgb:1.00000,1.00000,1.00000,1.00000"
+                ],
+                "orientation" : {
+                  "start" : {
+                    "x" : 0.20150521662145496,
+                    "y" : 0.08869538439744448
+                  },
+                  "stop" : {
+                    "x" : 0.8422231490695319,
+                    "y" : 0.9626471132090871
+                  }
+                }
+              }
+            }
+          ],
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "Shape 3.png",
+          "name" : "Shape 3",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -70.1701264726671,
+              40.5
             ]
           }
         }
