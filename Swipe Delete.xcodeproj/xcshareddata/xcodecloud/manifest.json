@@ -1,0 +1,9 @@
+{
+  "id" : "1195a9a0-dd72-428f-8ef4-e83c9f93c242",
+  "targets" : [
+    {
+      "id" : "0fbdfbd9-b37a-48f7-8be0-00cd1deea7ce",
+      "name" : "Swipe Delete"
+    }
+  ]
+}

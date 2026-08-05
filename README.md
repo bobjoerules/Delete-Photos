@@ -4,6 +4,6 @@ Swipe Delete is an iOS application designed for managing and deleting photos fro
 
 ## Screenshots
 
-| Homepage | Delete Dialog | Animation | Settings |
-| :---: | :---: | :---: | :---: |
-| <img src="screenshots/homescreen.png" width="180"> | <img src="screenshots/deletepopup.png" width="180"> | <img src="screenshots/deleteing-animation.png" width="180"> | <img src="screenshots/settingspage.png" width="180"> |
+| Homepage | Delete Dialog | Settings |
+| :---: | :---: | :---: |
+| <img src="screenshots/homescreen.jpg" width="180"> | <img src="screenshots/deletepopup.jpg" width="180"> | <img src="screenshots/settings.jpg" width="180"> |
