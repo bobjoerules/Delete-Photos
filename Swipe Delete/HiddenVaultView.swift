@@ -131,47 +131,49 @@ struct HiddenVaultView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack(spacing: 16) {
-                        if isSelectionMode {
-                            Button(role: .destructive) {
-                                deleteSelectedItems()
-                            } label: {
-                                Image(systemName: "trash")
-                                    .foregroundColor(selectedItems.isEmpty ? .secondary : .red)
+                if isSelectionMode {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(role: .destructive) {
+                            deleteSelectedItems()
+                        } label: {
+                            Image(systemName: "trash")
+                                .foregroundColor(selectedItems.isEmpty ? .secondary : .red)
+                        }
+                        .disabled(selectedItems.isEmpty)
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Cancel") {
+                            withAnimation {
+                                isSelectionMode = false
+                                selectedItems.removeAll()
                             }
-                            .disabled(selectedItems.isEmpty)
-
-                            Button("Cancel") {
+                        }
+                    }
+                } else {
+                    if !vault.items.isEmpty {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Select") {
                                 withAnimation {
-                                    isSelectionMode = false
+                                    isSelectionMode = true
                                     selectedItems.removeAll()
                                 }
                             }
-                        } else {
-                            if !vault.items.isEmpty {
-                                Button("Select") {
-                                    withAnimation {
-                                        isSelectionMode = true
-                                        selectedItems.removeAll()
-                                    }
-                                }
-                            }
-
-                            PhotosPicker(
-                                selection: $selection,
-                                maxSelectionCount: nil,
-                                matching: .any(of: [.images, .videos]),
-                                photoLibrary: .shared()
-                            ) {
-                                Image(systemName: "plus")
-                            }
-                            .onChange(of: selection) { oldValue, newValue in
-                                guard !newValue.isEmpty else { return }
-                                Task {
-                                    await importAssets(newValue)
-                                    selection = []
-                                }
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        PhotosPicker(
+                            selection: $selection,
+                            maxSelectionCount: nil,
+                            matching: .any(of: [.images, .videos]),
+                            photoLibrary: .shared()
+                        ) {
+                            Image(systemName: "plus")
+                        }
+                        .onChange(of: selection) { oldValue, newValue in
+                            guard !newValue.isEmpty else { return }
+                            Task {
+                                await importAssets(newValue)
+                                selection = []
                             }
                         }
                     }

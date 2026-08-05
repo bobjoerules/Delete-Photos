@@ -33,6 +33,33 @@ struct ContentView: View {
         ZStack {
             NavigationStack {
                 ZStack {
+                    ZStack {
+                        VStack {
+                            LinearGradient(
+                                colors: [activeFlashColor, activeFlashColor.opacity(0.0)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                            .frame(height: 180)
+                            .ignoresSafeArea(edges: .top)
+                            Spacer()
+                        }
+                        VStack {
+                            Spacer()
+                            LinearGradient(
+                                colors: [activeFlashColor.opacity(0.0), activeFlashColor],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                            .frame(height: 150)
+                            .ignoresSafeArea(edges: .bottom)
+                        }
+                    }
+                    .opacity(flashOpacity)
+                    .allowsHitTesting(false)
+                    
+                    VStack {
+                        ZStack {
                 HStack {
                     Spacer()
                     Button(action: {
@@ -195,36 +222,9 @@ struct ContentView: View {
                 }
             }
         }
+    }
+}
         .edgesIgnoringSafeArea(.bottom)
-        .overlay(
-            ZStack {
-
-                VStack {
-                    LinearGradient(
-                        colors: [activeFlashColor, activeFlashColor.opacity(0.0)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .frame(height: 180)
-                    .ignoresSafeArea(edges: .top)
-                    Spacer()
-                }
-
-
-                VStack {
-                    Spacer()
-                    LinearGradient(
-                        colors: [activeFlashColor.opacity(0.0), activeFlashColor],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .frame(height: 150)
-                    .ignoresSafeArea(edges: .bottom)
-                }
-            }
-            .opacity(flashOpacity)
-            .allowsHitTesting(false)
-        )
         .onAppear {
                 loadPhotos()
                 let center = NotificationCenter.default
@@ -238,6 +238,8 @@ struct ContentView: View {
                 loadPhotos()
             }
         }
+        .blur(radius: showingPasscodePrompt ? 20 : 0)
+        .allowsHitTesting(!showingPasscodePrompt)
 
             if showingPasscodePrompt {
                 PasscodeLockscreenView(

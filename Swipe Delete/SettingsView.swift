@@ -42,7 +42,7 @@ struct SettingsView: View {
                     Divider()
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("SWIPES")
+                        Text("TOTAL SWIPES")
                             .font(.caption2)
                             .foregroundColor(.secondary)
                         Text("\(totalSwipes)")

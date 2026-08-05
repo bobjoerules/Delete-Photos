@@ -8,6 +8,7 @@ struct PasscodeLockscreenView: View {
     @State private var input: String = ""
     @State private var errorText: String? = nil
     @State private var shakeOffset: CGFloat = 0
+    @State private var isFlashRed = false
 
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @AppStorage("hapticsEnabled") private var hapticsEnabled = true
@@ -42,10 +43,10 @@ struct PasscodeLockscreenView: View {
                             HStack(spacing: 24) {
                                 ForEach(0..<4) { index in
                                     Circle()
-                                        .stroke(Color.primary.opacity(0.5), lineWidth: 2)
+                                        .stroke(isFlashRed ? Color.red : Color.primary.opacity(0.5), lineWidth: 2)
                                         .background(
                                             Circle()
-                                                .fill(index < input.count ? Color.primary : Color.clear)
+                                                .fill(index < input.count ? (isFlashRed ? Color.red : Color.primary) : Color.clear)
                                         )
                                         .frame(width: 16, height: 16)
                                         .scaleEffect(index < input.count ? 1.2 : 1.0)
@@ -80,10 +81,10 @@ struct PasscodeLockscreenView: View {
                         HStack(spacing: 24) {
                             ForEach(0..<4) { index in
                                 Circle()
-                                    .stroke(Color.primary.opacity(0.5), lineWidth: 2)
+                                    .stroke(isFlashRed ? Color.red : Color.primary.opacity(0.5), lineWidth: 2)
                                     .background(
                                         Circle()
-                                            .fill(index < input.count ? Color.primary : Color.clear)
+                                            .fill(index < input.count ? (isFlashRed ? Color.red : Color.primary) : Color.clear)
                                     )
                                     .frame(width: 16, height: 16)
                                     .scaleEffect(index < input.count ? 1.2 : 1.0)
@@ -216,10 +217,17 @@ struct PasscodeLockscreenView: View {
                 feedbackGenerator.notificationOccurred(.success)
                 onSuccess()
             } else {
-                errorText = "Incorrect passcode."
                 feedbackGenerator.notificationOccurred(.error)
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    isFlashRed = true
+                }
                 shake()
-                input = ""
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        isFlashRed = false
+                        input = ""
+                    }
+                }
             }
         }
     }
