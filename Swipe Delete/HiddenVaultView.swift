@@ -141,7 +141,7 @@ struct HiddenVaultView: View {
                                     .foregroundColor(selectedItems.isEmpty ? .secondary : .red)
                             }
                             .disabled(selectedItems.isEmpty)
-                            
+
                             Button("Cancel") {
                                 withAnimation {
                                     isSelectionMode = false
@@ -157,7 +157,7 @@ struct HiddenVaultView: View {
                                     }
                                 }
                             }
-                            
+
                             PhotosPicker(
                                 selection: $selection,
                                 maxSelectionCount: nil,
@@ -201,14 +201,14 @@ struct HiddenVaultView: View {
                 } else {
                     placeholderThumbnail
                 }
-                
+
                 if ext == "mov" || ext == "mp4" {
                     Image(systemName: "play.circle.fill")
                         .foregroundColor(.white)
                         .shadow(radius: 2)
                         .padding(6)
                 }
-                
+
                 if isSelectionMode {
                     let isSelected = selectedItems.contains(item.id)
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
@@ -247,16 +247,16 @@ struct HiddenVaultView: View {
                 indicesToDelete.insert(i)
             }
         }
-        
+
         vault.remove(at: indicesToDelete)
-        
+
         withAnimation {
             isSelectionMode = false
             selectedItems.removeAll()
         }
     }
 
-    // MARK: - Import
+
 
     @MainActor
     private func importAssets(_ items: [PhotosPickerItem]) async {
@@ -273,7 +273,7 @@ struct HiddenVaultView: View {
                         idsToDelete.append(id)
                     }
                 default:
-                    // Try image first, then video fallback
+
                     if let id = await importImage(picked) {
                         idsToDelete.append(id)
                     } else if let id = await importVideo(picked) {
@@ -281,13 +281,13 @@ struct HiddenVaultView: View {
                     }
                 }
             } else {
-                // No supported types? Try image fallback.
+
                 if let id = await importImage(picked) {
                     idsToDelete.append(id)
                 }
             }
         }
-        
+
         if !idsToDelete.isEmpty {
             deleteOriginalAssets(with: idsToDelete)
         }
@@ -318,10 +318,10 @@ struct HiddenVaultView: View {
 
     @MainActor
     private func importVideo(_ item: PhotosPickerItem) async -> String? {
-        // Attempt to load raw data for the video from the picker
+
         guard let data = try? await item.loadTransferable(type: Data.self) else { return nil }
 
-        // Determine file extension from supported content type; default to mov
+
         let ext: String = {
             if let type = item.supportedContentTypes.first {
                 if type.conforms(to: .mpeg4Movie) { return "mp4" }
@@ -364,7 +364,7 @@ struct VaultGalleryPreviewView: View {
     @Binding var selectedIndex: Int
     @ObservedObject var vault: VaultStore
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationStack {
             TabView(selection: $selectedIndex) {
@@ -399,13 +399,13 @@ struct VaultGalleryPreviewView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
         }
     }
-    
+
     private func deleteCurrentItem() {
         guard selectedIndex >= 0 && selectedIndex < vault.items.count else { return }
         let indexToDelete = selectedIndex
-        
+
         vault.remove(at: IndexSet(integer: indexToDelete))
-        
+
         if vault.items.isEmpty {
             dismiss()
         } else if selectedIndex >= vault.items.count {
@@ -417,7 +417,7 @@ struct VaultGalleryPreviewView: View {
 struct VaultDetailView: View {
     let item: VaultItem
     @ObservedObject var vault: VaultStore
-    
+
     var body: some View {
         VStack {
             Spacer()
@@ -441,7 +441,7 @@ struct VaultDetailView: View {
             Spacer()
         }
     }
-    
+
     private var placeholderView: some View {
         VStack(spacing: 12) {
             Image(systemName: "doc.text.fill")

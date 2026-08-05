@@ -139,13 +139,7 @@ struct ContentView: View {
                     HStack {
                         Spacer()
                         NavigationLink(destination: SettingsView(
-                            resetData: resetData,
-                            skipToLastPhoto: {
-                                guard !photos.isEmpty else { return }
-                                currentIndex = photos.count - 1
-                                delaycurrentIndex = photos.count - 1
-                                showPhoto()
-                            }
+                            resetData: resetData
                         )) {
                             Image(systemName: "gearshape")
                                 .font(.system(size: 22))
@@ -204,7 +198,7 @@ struct ContentView: View {
         .edgesIgnoringSafeArea(.bottom)
         .overlay(
             ZStack {
-                // Top Gradient (fades down)
+
                 VStack {
                     LinearGradient(
                         colors: [activeFlashColor, activeFlashColor.opacity(0.0)],
@@ -215,8 +209,8 @@ struct ContentView: View {
                     .ignoresSafeArea(edges: .top)
                     Spacer()
                 }
-                
-                // Bottom Gradient (fades up)
+
+
                 VStack {
                     Spacer()
                     LinearGradient(
@@ -351,18 +345,18 @@ struct ContentView: View {
                 let results = PHAsset.fetchAssets(with: .image, options: fetchOptions)
                 var assets: [PHAsset] = []
                 results.enumerateObjects { asset, _, _ in assets.append(asset) }
-                
+
                 let defaults = UserDefaults.standard
                 let lastNewestID = defaults.string(forKey: "lastNewestPhoto")
                 let lastViewedID = defaults.string(forKey: "lastViewedPhoto")
                 self.displayedNewPhotos = Set(defaults.stringArray(forKey: "displayedNewPhotos") ?? [])
                 self.selectedForDeletion = Set(defaults.stringArray(forKey: "selectedForDeletion") ?? [])
-                
-                // Clean up stale selections not present in library
+
+
                 let libraryIDs = Set(assets.map { $0.localIdentifier })
                 self.selectedForDeletion = self.selectedForDeletion.intersection(libraryIDs)
                 defaults.set(Array(self.selectedForDeletion), forKey: "selectedForDeletion")
-                
+
                 var newPhotos: [PHAsset] = []
                 if let lastNewestID = lastNewestID,
                    let lastIndex = assets.firstIndex(where: { $0.localIdentifier == lastNewestID }),
@@ -374,7 +368,7 @@ struct ContentView: View {
                 let combined = Array(NSOrderedSet(array: newPhotos + oldPhotos)) as! [PHAsset]
                 let filtered = combined.filter { !selectedForDeletion.contains($0.localIdentifier) }
                 self.photos = filtered
-                
+
                 if !newPhotos.isEmpty {
                     self.currentIndex = 0
                 } else if let lastViewedID = lastViewedID,
@@ -394,14 +388,14 @@ struct ContentView: View {
 
     private func deleteSelectedPhotos() {
         guard !selectedForDeletion.isEmpty else { return }
-        
+
         let currentID = currentIndex < photos.count ? photos[currentIndex].localIdentifier : ""
         let idsToDelete = selectedForDeletion.filter { $0 != currentID }
         guard !idsToDelete.isEmpty else { return }
-        
+
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
             guard status == .authorized else { return }
-            
+
             DispatchQueue.main.async {
                 let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: Array(idsToDelete), options: nil)
                 var assetsToDelete: [PHAsset] = []
@@ -409,7 +403,7 @@ struct ContentView: View {
                     assetsToDelete.append(asset)
                 }
                 guard !assetsToDelete.isEmpty else { return }
-                
+
                 PHPhotoLibrary.shared().performChanges({
                     PHAssetChangeRequest.deleteAssets(assetsToDelete as NSArray)
                 }) { success, error in
@@ -419,10 +413,10 @@ struct ContentView: View {
                             photos.removeAll { assetsToDelete.contains($0) }
                             selectedForDeletion.subtract(idsToDelete)
                             UserDefaults.standard.set(Array(selectedForDeletion), forKey: "selectedForDeletion")
-                            
+
                             let currentTotal = UserDefaults.standard.integer(forKey: "totalPhotosDeleted")
                             UserDefaults.standard.set(currentTotal + assetsToDelete.count, forKey: "totalPhotosDeleted")
-                            
+
                             if let currentAsset = currentAsset, let newIndex = photos.firstIndex(of: currentAsset) {
                                 currentIndex = newIndex
                                 delaycurrentIndex = newIndex
@@ -484,16 +478,16 @@ struct ContentView: View {
             showPhoto()
         }
     }
-    
+
     private func triggerFlash(_ color: Color) {
         guard flashFeedbackEnabled else { return }
         flashTask?.cancel()
         activeFlashColor = color
-        
+
         withAnimation(.easeOut(duration: 0.2)) {
             flashOpacity = 1.0
         }
-        
+
         flashTask = Task {
             try? await Task.sleep(nanoseconds: 200_000_000)
             guard !Task.isCancelled else { return }
@@ -509,21 +503,21 @@ struct ContentView: View {
 class ImageActivityItemSource: NSObject, UIActivityItemSource {
     let image: UIImage
     let title: String
-    
+
     init(image: UIImage, title: String) {
         self.image = image
         self.title = title
         super.init()
     }
-    
+
     func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
         return image
     }
-    
+
     func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         return image
     }
-    
+
     func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
         let metadata = LPLinkMetadata()
         metadata.title = title

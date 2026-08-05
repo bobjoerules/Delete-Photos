@@ -4,32 +4,32 @@ struct PasscodeLockscreenView: View {
     let isCreating: Bool
     let onSuccess: () -> Void
     let onCancel: () -> Void
-    
+
     @State private var input: String = ""
     @State private var errorText: String? = nil
     @State private var shakeOffset: CGFloat = 0
-    
+
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     private let impact = UIImpactFeedbackGenerator(style: .medium)
     private let feedbackGenerator = UINotificationFeedbackGenerator()
-    
+
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
-                
+
                 if verticalSizeClass == .compact {
-                    // Landscape layout: split side-by-side
+
                     HStack(spacing: 50) {
                         VStack(spacing: 24) {
-                            // Header Title
+
                             VStack(spacing: 12) {
                                 Text(isCreating ? "Create Passcode" : "Enter Passcode")
                                     .font(.title2)
                                     .bold()
                                     .foregroundStyle(.primary)
-                                
+
                                 if let errorText = errorText {
                                     Text(errorText)
                                         .font(.footnote)
@@ -37,8 +37,8 @@ struct PasscodeLockscreenView: View {
                                         .transition(.opacity)
                                 }
                             }
-                            
-                            // Passcode Dot Indicators
+
+
                             HStack(spacing: 24) {
                                 ForEach(0..<4) { index in
                                     Circle()
@@ -54,20 +54,20 @@ struct PasscodeLockscreenView: View {
                             }
                             .offset(x: shakeOffset)
                         }
-                        
-                        // Keypad Grid
+
+
                         keypadGrid
                     }
                 } else {
-                    // Portrait layout: stacked vertically
+
                     VStack(spacing: 40) {
-                        // Header Title
+
                         VStack(spacing: 12) {
                             Text(isCreating ? "Create Passcode" : "Enter Passcode")
                                 .font(.title2)
                                 .bold()
                                 .foregroundStyle(.primary)
-                            
+
                             if let errorText = errorText {
                                 Text(errorText)
                                     .font(.footnote)
@@ -75,8 +75,8 @@ struct PasscodeLockscreenView: View {
                                     .transition(.opacity)
                             }
                         }
-                        
-                        // Passcode Dot Indicators
+
+
                         HStack(spacing: 24) {
                             ForEach(0..<4) { index in
                                 Circle()
@@ -91,19 +91,19 @@ struct PasscodeLockscreenView: View {
                             }
                         }
                         .offset(x: shakeOffset)
-                        
-                        // Keypad Grid
+
+
                         keypadGrid
                     }
                 }
-                
+
                 Spacer()
             }
             .padding()
         }
     }
-    
-    // Keypad Grid View
+
+
     private var keypadGrid: some View {
         VStack(spacing: 18) {
             let subtexts = ["", "A B C", "D E F", "G H I", "J K L", "M N O", "P Q R S", "T U V", "W X Y Z"]
@@ -117,9 +117,9 @@ struct PasscodeLockscreenView: View {
                     }
                 }
             }
-            
+
             HStack(spacing: 24) {
-                // Cancel Button
+
                 Button(action: {
                     playHaptic()
                     onCancel()
@@ -130,13 +130,13 @@ struct PasscodeLockscreenView: View {
                         .frame(width: 75, height: 75)
                         .foregroundStyle(.primary)
                 }
-                
-                // 0 Button
+
+
                 keypadButton(text: "0") {
                     appendDigit("0")
                 }
-                
-                // Delete Button
+
+
                 Button(action: {
                     playHaptic()
                     deleteDigit()
@@ -152,8 +152,8 @@ struct PasscodeLockscreenView: View {
         }
         .buttonStyle(.plain)
     }
-    
-    // Keypad circular button view helper
+
+
     @ViewBuilder
     private func keypadButton(text: String, subtext: String = "", action: @escaping () -> Void) -> some View {
         Button(action: {
@@ -175,28 +175,28 @@ struct PasscodeLockscreenView: View {
             .glassEffect(.regular.interactive(), in: Circle())
         }
     }
-    
-    // Helper to append digit and trigger auto-submit
+
+
     private func appendDigit(_ digit: String) {
         guard input.count < 4 else { return }
         input.append(digit)
-        
+
         if input.count == 4 {
-            // Add a very slight delay so the user sees the 4th dot fill up before validation
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 validate()
             }
         }
     }
-    
-    // Helper to delete digit
+
+
     private func deleteDigit() {
         if !input.isEmpty {
             input.removeLast()
         }
     }
-    
-    // Validation logic
+
+
     private func validate() {
         if isCreating {
             do {
@@ -223,8 +223,8 @@ struct PasscodeLockscreenView: View {
             }
         }
     }
-    
-    // Shake animation
+
+
     private func shake() {
         withAnimation(.default) {
             shakeOffset = 15
@@ -245,8 +245,8 @@ struct PasscodeLockscreenView: View {
             }
         }
     }
-    
-    // Haptics helper
+
+
     private func playHaptic() {
         if hapticsEnabled {
             impact.impactOccurred()

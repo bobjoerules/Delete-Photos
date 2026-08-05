@@ -5,19 +5,18 @@ struct SettingsView: View {
     @AppStorage("hiddenFolderEnabled") private var hiddenFolderEnabled = false
     @AppStorage("flashFeedbackEnabled") private var flashFeedbackEnabled = true
     @AppStorage("flipSwipeDirections") private var flipSwipeDirections = false
-    
+
     @AppStorage("totalPhotosDeleted") private var totalPhotosDeleted = 0
-    
+
     @AppStorage("totalSwipes") private var totalSwipes = 0
-    
-    // Hidden toggle starts as false, revealed by pulling down (scrolling up)
+
+
     @State private var showHiddenToggle = false
-    
+
     let impact = UIImpactFeedbackGenerator(style: .heavy)
     let resetData: () -> Void
-    let skipToLastPhoto: () -> Void
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         Form {
             if showHiddenToggle {
@@ -26,7 +25,7 @@ struct SettingsView: View {
                 }
                 .transition(.move(edge: .top).combined(with: .opacity))
             }
-            
+
             Section(header: Text("Statistics")) {
                 HStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 4) {
@@ -39,9 +38,9 @@ struct SettingsView: View {
                             .foregroundColor(.red)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     Divider()
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
                         Text("SWIPES")
                             .font(.caption2)
@@ -55,21 +54,21 @@ struct SettingsView: View {
                 }
                 .padding(.vertical, 4)
             }
-            
+
             Section {
                 Toggle("Haptic Feedback", isOn: $hapticsEnabled)
                     .contentShape(Rectangle())
                     .onTapGesture(count: 3) {
-                        // Failsafe triple-tap easter egg to reveal
+
                         revealToggle()
                     }
-                
+
                 Toggle("Swipe Flash Feedback", isOn: $flashFeedbackEnabled)
-                
+
                 Toggle("Flip Swipe Directions", isOn: $flipSwipeDirections)
             }
-            
-            Section(header: Text("Debug")) {
+
+            Section {
                 Button(role: .destructive) {
                     resetData()
                     dismiss()
@@ -81,17 +80,6 @@ struct SettingsView: View {
                         Spacer()
                     }
                 }
-                
-                Button {
-                    skipToLastPhoto()
-                    dismiss()
-                    impact.impactOccurred()
-                } label: {
-                    HStack {
-                        Label("Skip to Last Photo", systemImage: "arrow.left")
-                        Spacer()
-                    }
-                }
             }
         }
         .refreshable {
@@ -100,7 +88,7 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
     }
-    
+
     private func revealToggle() {
         if !showHiddenToggle {
             let generator = UINotificationFeedbackGenerator()
