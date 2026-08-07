@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("hiddenFolderEnabled") private var hiddenFolderEnabled = false
     @AppStorage("flashFeedbackEnabled") private var flashFeedbackEnabled = true
     @AppStorage("flipSwipeDirections") private var flipSwipeDirections = false
+    @AppStorage("lockOrientationVertical") private var lockOrientationVertical = false
 
     @AppStorage("totalPhotosDeleted") private var totalPhotosDeleted = 0
 
@@ -66,6 +67,8 @@ struct SettingsView: View {
                 Toggle("Swipe Flash Feedback", isOn: $flashFeedbackEnabled)
 
                 Toggle("Flip Swipe Directions", isOn: $flipSwipeDirections)
+
+                Toggle("Lock Vertical Orientation", isOn: $lockOrientationVertical)
             }
 
             Section {
@@ -87,6 +90,22 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
+        .onChange(of: lockOrientationVertical) { oldValue, newValue in
+            updateOrientation(lock: newValue)
+        }
+    }
+
+    private func updateOrientation(lock: Bool) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        
+        let orientations: UIInterfaceOrientationMask = lock ? .portrait : .all
+        windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: orientations)) { error in
+            print("Geometry update failed: \(error.localizedDescription)")
+        }
+        
+        if let rootVC = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+            rootVC.setNeedsUpdateOfSupportedInterfaceOrientations()
+        }
     }
 
     private func revealToggle() {
